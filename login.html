@@ -7,11 +7,50 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <form action="authorise.php" method="POST">
-        <h2>Login</h2>
-        <input type="text" name="username" placeholder="Username" required><br>
-        <input type="text" name="password" placeholder="Password" required><br>
-        <button type="submit">Login</button>
-    </form>
+
+    <!-- Navigation Bar -->
+    <header>
+        <nav>
+            <div class="logo">Polish Air</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="flights.html">Flights</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="register.html" class="btn active">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Login Section -->
+    <section class="login-section">
+        <div class="container">
+            <h2>Login</h2>
+            <form action="authorise.php" method="POST">
+                
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="login-footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Airline Booking. All rights reserved.</p>
+            <ul class="social-links">
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">Twitter</a></li>
+                <li><a href="#">Instagram</a></li>
+            </ul>
+        </div>
+    </footer>
+
 </body>
 </html>
