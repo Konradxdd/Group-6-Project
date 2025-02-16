@@ -11,6 +11,10 @@ body {
     color: #333;
 }
 
+textarea {
+    resize: none;
+}
+
 /* Navigation Bar */
 header {
     background: #004080;
