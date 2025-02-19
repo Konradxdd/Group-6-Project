@@ -625,3 +625,78 @@ footer {
     padding: 20px;
     margin-top: 150px;
 }
+
+
+
+/*     Seat Selection   */
+
+.plane {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.seats {
+    display: flex;
+    flex-direction: column;
+}
+.row {
+    display: flex;
+    justify-content: center;
+}
+.seat {
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    background-color: #00cc66;
+    text-align: center;
+    line-height: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.occupied {
+    background-color: red !important;
+    pointer-events: none;
+}
+.selected {
+    background-color: orange !important;
+}
+
+.seat-section {
+    background: #F4F4F4; 
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.seat-section h2 {
+    color: #004080; 
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.seat-section button {
+    width: 100%;
+    padding: 12px;
+    background: #FFD700;
+    border: none;
+    color: #004080;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: 0.3s ease-in-out;
+}
+
+
+.seat-section button:hover {
+    background: #FFC000;
+    transform: scale(1.05);
+}
+
+.gap {
+    width: 40px;
+    height: 40px;
+    visibility: hidden;
+}
