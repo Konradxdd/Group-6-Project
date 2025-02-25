@@ -700,3 +700,48 @@ footer {
     height: 40px;
     visibility: hidden;
 }
+
+
+
+/*     Flight List  */
+
+
+.flight-list {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #E0E0E0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.flight-list h2 {
+    text-align: center;
+    color: #004080;
+    margin-bottom: 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #004080;
+    color: white;
+}
+
+.flights-footer {
+    background: #002244;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 150px;
+}

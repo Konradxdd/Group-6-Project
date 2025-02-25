@@ -14,7 +14,7 @@
             <div class="logo">Polish Air</div>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="#">Flights</a></li>
+                <li><a href="flights.php">Flights</a></li>
                 <li><a href="#">About Us</a></li>
                 <li><a href="contact.html" class="active">Contact</a></li>
                 <li><a href="login.html">Login</a></li>
