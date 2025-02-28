@@ -2,9 +2,9 @@
 session_start();
 include 'database.php';
 
-if($_SERVER["REQUEST_METHOD"]=="POST" && isset($_POST['id'])) {
-    $id = intval($_POST['id']);
-    $sql = "DELETE FROM messages WHERE id = ?";
+if($_SERVER["REQUEST_METHOD"]=="POST" && isset($_POST['message_id'])) {
+    $id = intval($_POST['message_id']);
+    $sql = "DELETE FROM messages WHERE message_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('i',$id);
 
