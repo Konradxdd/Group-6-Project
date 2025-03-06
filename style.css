@@ -745,3 +745,37 @@ th {
     padding: 20px;
     margin-top: 150px;
 }
+
+
+
+/*     Rules page  */
+
+
+.container-rules{
+    width: 80%;
+    margin:auto;
+    background:white;
+    padding: 25px;
+    border-radius: 7px;
+    margin-top: 20px;
+    
+}
+
+.container-rules h1{
+    text-align: center;
+}
+
+.air{
+    margin-bottom: 15px;
+    padding: 10px;
+    border-left: 5px solid #004080;
+    background: #eef4ff;
+}
+
+.rules-footer {
+    background: #002244;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 120px;
+}

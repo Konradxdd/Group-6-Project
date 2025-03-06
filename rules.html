@@ -3,38 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rule and regulations</title>
-    <style>
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-
-        .container{
-            width: 80%;
-            margin:auto;
-            background:white;
-            padding: 25px;
-            border-radius: 7px;
-            margin-top: 20px;
-            
-        }
-        h1{
-            text-align: center;
-        }
-        .air{
-            margin-bottom: 15px;
-            padding: 10px;
-            border-left: 5px solid #007bff;
-            background: #eef4ff;
-        }
-    </style>
+    <title>Rules and regulations</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Rules and regualtions for Air Ticket Booking</h1>
+
+    <!-- Navigation Bar -->
+    <header>
+        <nav>
+            <div class="logo">Polish Air</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="flights.php">Flights</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="register.html" class="btn">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container-rules">
+        <h1>Rules and regulations for Air Ticket Booking</h1>
         <div class="air">
             <strong>Booking confirmation:</strong> All bookings will confirm via email or sms.
         </div>
@@ -62,7 +52,19 @@
         <div class="air">
             <strong>Cancellation policy:</strong> Tickets can be cancelled up to 24 hours before departure with applicable charges.
         </div>
-
     </div>
+
+    <!-- Footer -->
+    <footer class="rules-footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Polish Air. All rights reserved.</p>
+            <ul class="social-links">
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">Twitter</a></li>
+                <li><a href="#">Instagram</a></li>
+            </ul>
+        </div>
+    </footer>
+
 </body>
 </html>
