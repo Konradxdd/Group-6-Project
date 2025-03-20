@@ -66,7 +66,7 @@ include 'database.php';
                         $destination = $_GET["destination"];
                         $flight_date = $_GET["flight_date"];
 
-                        $sql = "SELECT * FROM flights WHERE departure_city = ? AND destination_city = ? AND flight_date = ?";
+                        $sql = "SELECT * FROM flights WHERE departure = ? AND destination = ? AND flight_date = ?";
                         $stmt = $conn->prepare($sql);
                         $stmt->bind_param("sss", $departure, $destination, $flight_date);
                         $stmt->execute();
@@ -76,8 +76,8 @@ include 'database.php';
                             while ($row = $result->fetch_assoc()) {
                                 echo "<tr>
                                         <td>{$row['airline']}</td>
-                                        <td>{$row['departure_city']}</td>
-                                        <td>{$row['destination_city']}</td>
+                                        <td>{$row['departure']}</td>
+                                        <td>{$row['destination']}</td>
                                         <td>{$row['departure_time']}</td>
                                         <td>{$row['arrival_time']}</td>
                                         <td>{$row['price']}</td>
