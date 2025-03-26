@@ -721,23 +721,6 @@ footer {
     margin-bottom: 15px;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-th, td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
-}
-
-th {
-    background-color: #004080;
-    color: white;
-}
-
 .flights-footer {
     background: #002244;
     color: white;
@@ -746,6 +729,52 @@ th {
     margin-top: 150px;
 }
 
+.flight-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.flight-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    background: #f1f1f1;
+}
+
+.flight-details {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 10px;
+}
+
+.flight-price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #004080;
+}
+
+.book-btn {
+    background: #004080;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.book-btn:hover {
+    background: #002244;
+}
 
 
 /*     Rules page  */

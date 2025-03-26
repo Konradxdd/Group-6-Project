@@ -47,50 +47,37 @@ include 'database.php';
     <!-- Flight List -->
     <section class="flight-list">
         <h2>Available Flights</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Airline</th>
-                    <th>Departure</th>
-                    <th>Destination</th>
-                    <th>Departure Time</th>
-                    <th>Arrival Time</th>
-                    <th>Price (£)</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
-            <tbody id="flight-results">
-                <?php
-                    if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["departure"]) && isset($_GET["destination"]) && isset($_GET["flight_date"])) {
-                        $departure = $_GET["departure"];
-                        $destination = $_GET["destination"];
-                        $flight_date = $_GET["flight_date"];
+        <div id="flight-results" class="flight-container">
+            <?php
+                if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["departure"]) && isset($_GET["destination"]) && isset($_GET["flight_date"])) {
+                    $departure = $_GET["departure"];
+                    $destination = $_GET["destination"];
+                    $flight_date = $_GET["flight_date"];
 
-                        $sql = "SELECT * FROM flights WHERE departure = ? AND destination = ? AND flight_date = ?";
-                        $stmt = $conn->prepare($sql);
-                        $stmt->bind_param("sss", $departure, $destination, $flight_date);
-                        $stmt->execute();
-                        $result = $stmt->get_result();
+                    $sql = "SELECT * FROM flights WHERE departure = ? AND destination = ? AND flight_date = ?";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("sss", $departure, $destination, $flight_date);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
 
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                echo "<tr>
-                                        <td>{$row['airline']}</td>
-                                        <td>{$row['departure']}</td>
-                                        <td>{$row['destination']}</td>
-                                        <td>{$row['departure_time']}</td>
-                                        <td>{$row['arrival_time']}</td>
-                                        <td>{$row['price']}</td>
-                                        <td>{$row['flight_date']}</td>
-                                    </tr>";
-                            }
-                        } else {
-                            echo "<tr><td colspan='7'>No flights found</td></tr>";
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<div class='flight-card' onclick='location.href=\"booking.php?flight_id={$row['id']}\"'>
+                                    <div class='flight-details'>
+                                        <strong>{$row['airline']}</strong>
+                                        <p>{$row['departure']} ➝ {$row['destination']}</p>
+                                        <p>Departure: {$row['departure_time']} | Arrival: {$row['arrival_time']}</p>
+                                        <p class='flight-price'>€{$row['price']}</p>
+                                    </div>
+                                    <a href='booking.php?flight_id={$row['id']}' class='book-btn'>Book Now</a>
+                                  </div>";
                         }
+                    } else {
+                        echo "<p>No flights found</p>";
                     }
-                    ?>
-            </tbody>
-        </table>
+                }
+            ?>
+        </div>
     </section>
 
      <!-- Footer -->
