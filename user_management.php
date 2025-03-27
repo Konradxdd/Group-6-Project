@@ -1,32 +1,37 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['users'])) {
-    $_SESSION['users'] = [
-        ['username' => 'Konrad', 'role' => 'Staff'],
-        ['username' => 'Pushpey', 'role' => 'Customer']
-    ];
+// Database connection
+$servername = "localhost"; // change this to your database server
+$username = "root"; // your database username
+$password = ""; // your database password
+$dbname = "user_management"; // your database name
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
-
+// Add New User
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username']);
-    $password = trim($_POST['password']); // Not stored — just for validation
+    $password = trim($_POST['password']); // Store the password securely in production (hashed)
     $role = $_POST['role'];
 
     if ($username && $password && $role !== '') {
-        $_SESSION['users'][] = ['username' => htmlspecialchars($username), 'role' => $role];
+        $password_hash = password_hash($password, PASSWORD_BCRYPT); // Hash password for security
+
+        $stmt = $conn->prepare("INSERT INTO users (username, password, role) VALUES (?, ?, ?)");
+        $stmt->bind_param("sss", $username, $password_hash, $role);
+        $stmt->execute();
+        $stmt->close();
     }
 }
 
-// Handle Delete User
-if (isset($_GET['delete'])) {
-    $index = (int) $_GET['delete'];
-    if (isset($_SESSION['users'][$index])) {
-        unset($_SESSION['users'][$index]);
-        $_SESSION['users'] = array_values($_SESSION['users']); // Reindex
-    }
-}
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -72,30 +77,6 @@ if (isset($_GET['delete'])) {
             cursor: pointer;
             width: auto;
         }
-
-        ul {
-            list-style: none;
-            padding: 0;
-            background: white;
-            max-width: 400px;
-            padding: 20px;
-            border-radius: 10px;
-        }
-
-        li {
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
-
-        .delete-btn {
-            color: red;
-            text-decoration: none;
-            margin-left: 10px;
-        }
-
-        .delete-btn:hover {
-            text-decoration: underline;
-        }
     </style>
 </head>
 <body>
@@ -120,16 +101,5 @@ if (isset($_GET['delete'])) {
         <input type="submit" value="Add User">
     </form>
 
-    <h2>Existing Users</h2>
-    <ul>
-        <?php foreach ($_SESSION['users'] as $index => $user): ?>
-            <li>
-                <?php echo htmlspecialchars($user['username']) . " ({$user['role']})"; ?>
-                <a href="?delete=<?php echo $index; ?>" class="delete-btn" onclick="return confirm('Are you sure?')">Remove</a>
-            </li>
-        <?php endforeach; ?>
-    </ul>
-
 </body>
 </html>
-
