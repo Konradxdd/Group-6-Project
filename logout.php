@@ -3,7 +3,7 @@ session_start();
 session_unset(); 
 session_destroy(); 
 
-header("Location: auth.php?action=login"); 
+header("Location: login.php"); 
 exit();
 ?>
 
