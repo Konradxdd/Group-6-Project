@@ -2,14 +2,14 @@
 session_start();
 include 'database.php';
 
-// Add New User
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username']);
-    $password = trim($_POST['password']); // Plain text password
-    $role = strtolower(trim($_POST['role'])); // Make sure the role is lowercase
+    $password = trim($_POST['password']); 
+    $role = strtolower(trim($_POST['role'])); 
 
     if (!empty($username) && !empty($password) && !empty($role)) {
-        // Check if username already exists
+       
         $check = $conn->prepare("SELECT id FROM users WHERE username = ?");
         if (!$check) {
             die("Prepare failed (Check Username): " . $conn->error);
@@ -41,9 +41,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+
+if (isset($_GET['delete'])) {
+    $userId = (int) $_GET['delete'];
+
+    $stmt = $conn->prepare("DELETE FROM users WHERE id = ?");
+    if (!$stmt) {
+        die("Prepare failed (Delete User): " . $conn->error);
+    }
+
+    $stmt->bind_param("i", $userId);
+    if ($stmt->execute()) {
+        echo "<script>alert('User deleted successfully.'); window.location.href='user_management.php';</script>";
+    } else {
+        echo "<script>alert('Error: Could not delete user.');</script>";
+    }
+    $stmt->close();
+}
+
+$result = $conn->query("SELECT id, username, role FROM users");
+if ($result === false) {
+    die("Error fetching users: " . $conn->error);
+}
+
 $conn->close();
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -88,6 +110,31 @@ $conn->close();
             cursor: pointer;
             width: auto;
         }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            background: white;
+            max-width: 400px;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .delete-btn {
+            color: red;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+
+        .delete-btn:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -111,6 +158,21 @@ $conn->close();
 
         <input type="submit" value="Add User">
     </form>
+
+    <h2>Existing Users</h2>
+    <ul>
+        <?php
+       
+        if ($result->num_rows > 0) {
+            while ($user = $result->fetch_assoc()) {
+                echo "<li>" . htmlspecialchars($user['username']) . " ({$user['role']}) 
+                <a href='?delete={$user['id']}' class='delete-btn' onclick='return confirm(\"Are you sure?\")'>Remove</a></li>";
+            }
+        } else {
+            echo "<li>No users found.</li>";
+        }
+        ?>
+    </ul>
 
 </body>
 </html>
