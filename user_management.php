@@ -1,38 +1,49 @@
 <?php
 session_start();
-
-// Database connection
-$servername = "localhost"; // change this to your database server
-$username = "root"; // your database username
-$password = ""; // your database password
-$dbname = "user_management"; // your database name
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include 'database.php';
 
 // Add New User
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username']);
-    $password = trim($_POST['password']); // Store the password securely in production (hashed)
-    $role = $_POST['role'];
+    $password = trim($_POST['password']); // Plain text password
+    $role = strtolower(trim($_POST['role'])); // Make sure the role is lowercase
 
-    if ($username && $password && $role !== '') {
-        $password_hash = password_hash($password, PASSWORD_BCRYPT); // Hash password for security
+    if (!empty($username) && !empty($password) && !empty($role)) {
+        // Check if username already exists
+        $check = $conn->prepare("SELECT id FROM users WHERE username = ?");
+        if (!$check) {
+            die("Prepare failed (Check Username): " . $conn->error);
+        }
+        $check->bind_param("s", $username);
+        $check->execute();
+        $check->store_result();
+
+        if ($check->num_rows > 0) {
+            die("Error: Username already taken.");
+        }
+        $check->close();
 
         $stmt = $conn->prepare("INSERT INTO users (username, password, role) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $username, $password_hash, $role);
-        $stmt->execute();
+        if (!$stmt) {
+            die("Prepare failed (Insert User): " . $conn->error);
+        }
+
+        $stmt->bind_param("sss", $username, $password, $role);
+
+        if (!$stmt->execute()) {
+            die("Execute failed: " . $stmt->error);
+        }
+
+        echo "<script>alert('User added successfully.'); window.location.href='user_management.php';</script>";
         $stmt->close();
+    } else {
+        echo "<script>alert('All fields are required.');</script>";
     }
 }
 
 $conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
