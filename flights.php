@@ -19,8 +19,8 @@ include 'database.php';
             <div class="logo">Polish Air</div>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="#">Flights</a></li>
-                <li><a href="#">About Us</a></li>
+                <li><a href="flights.php">Flights</a></li>
+                <li><a href="about.html">About Us</a></li>
                 <li><a href="contact.html" class="active">Contact</a></li>
                 <li><a href="login.html">Login</a></li>
                 <li><a href="register.html" class="btn">Sign Up</a></li>
