@@ -50,40 +50,44 @@ if (isset($_SESSION['username'])) {
     
     <section class="auth-container">
         
-        <div id="loginForm" class="auth-form">
-            <h2>Login</h2><br>
-            <form action="process_login.php" method="POST">
-                <label for="username">Username:</label><br>
-                <input type="text" id="username" name="username" required><br><br>
+        <section class="login-section">
+            <div id="loginForm" class="container">
+                <h2>Login</h2><br>
+                <form action="process_login.php" method="POST">
+                    <label for="username">Username:</label><br>
+                    <input type="text" id="username" name="username" required><br><br>
 
-                <label for="password">Password:</label><br>
-                <input type="password" id="password" name="password" required><br><br>
+                    <label for="password">Password:</label><br>
+                    <input type="password" id="password" name="password" required><br><br>
 
-                <button type="submit">Login</button><br><br>
-            </form>
-            <p>Don't have an account? <a href="javascript:void(0);" onclick="toggleForm('register')">Sign Up</a></p>
-        </div>
-
+                    <button type="submit">Login</button><br><br>
+                </form>
+                <p>Don't have an account? <a href="javascript:void(0);" onclick="toggleForm('register')">Sign Up</a></p>
+            </div>
+        </section>
         
-        <div id="registerForm" class="auth-form" style="display: none;">
-            <h2>Register</h2><br><br>
-            <form action="process_registration.php" method="POST">
-                <label for="username">Username:</label><br>
-                <input type="text" id="username" name="username" required><br><br>
+        <section class="registration-section">
+            <div id="registerForm" class="container" style="display: none;">
+                <h2>Register</h2><br><br>
+                <form action="process_registration.php" method="POST">
+                    <label for="username">Username:</label><br>
+                    <input type="text" id="username" name="username" required><br><br>
 
-                <label for="email">Email:</label><br>
-                <input type="email" id="email" name="email" required><br><br>
+                    <label for="email">Email:</label><br>
+                    <input type="email" id="email" name="email" required><br><br>
 
-                <label for="password">Password:</label><br>
-                <input type="password" id="password" name="password" required><br><br>
+                    <label for="password">Password:</label><br>
+                    <input type="password" id="password" name="password" required><br><br>
 
-                <label for="confirm_password">Confirm Password:</label><br>
-                <input type="password" id="confirm_password" name="confirm_password" required><br><br>
+                    <label for="confirm_password">Confirm Password:</label><br>
+                    <input type="password" id="confirm_password" name="confirm_password" required><br><br>
 
-                <button type="submit">Register</button><br><br>
-            </form>
-            <p>Already have an account? <a href="javascript:void(0);" onclick="toggleForm('login')">Login</a></p>
-        </div>
+                    <button type="submit">Register</button><br><br>
+                </form>
+                <p>Already have an account? <a href="javascript:void(0);" onclick="toggleForm('login')">Login</a></p>
+            </div>
+        </section>
+
     </section>
 
     
