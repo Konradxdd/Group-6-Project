@@ -33,8 +33,8 @@ $result = mysqli_query($conn, $query);
                 <li><a href="#">Flights</a></li>
                 <li><a href="#">About Us</a></li>
                 <li><a href="contact.html" class="active">Contact</a></li>
-                <li><a href="login.html">Login</a></li>
-                <li><a href="register.html" class="btn">Sign Up</a></li>
+                <li><a href="authorize.php" class="active">Login / Register</a></li>
+                <li><a href="logout.php">Logout</a></li>
             </ul>
         </nav>
     </header>
