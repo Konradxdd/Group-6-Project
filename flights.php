@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'database.php';
 ?>
 
@@ -62,15 +63,23 @@ include 'database.php';
 
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
-                            echo "<div class='flight-card' onclick='location.href=\"booking.php?flight_id={$row['id']}\"'>
-                                    <div class='flight-details'>
-                                        <strong>{$row['airline']}</strong>
-                                        <p>{$row['departure']} ➝ {$row['destination']}</p>
-                                        <p>Departure: {$row['departure_time']} | Arrival: {$row['arrival_time']}</p>
-                                        <p class='flight-price'>€{$row['price']}</p>
-                                    </div>
-                                    <a href='booking.php?flight_id={$row['id']}' class='book-btn'>Book Now</a>
-                                  </div>";
+                            $flight_id = $row['id'];
+
+                            echo "<div class='flight-card'>";
+                            echo "<div class='flight-details'>";
+                            echo "<strong>{$row['airline']}</strong>";
+                            echo "<p>{$row['departure']} ➝ {$row['destination']}</p>";
+                            echo "<p>Departure: {$row['departure_time']} | Arrival: {$row['arrival_time']}</p>";
+                            echo "<p class='flight-price'>€{$row['price']}</p>";
+                            echo "</div>";
+
+                            if (!isset($_SESSION['username'])) {
+                                echo "<a href='authorize.php?redirect=booking.php&flight_id={$row['id']}' class='book-btn'>Login to Book</a>";
+                            } else {
+                                echo "<a href='booking.php?flight_id={$row['id']}' class='book-btn'>Book Now</a>";
+                            }
+
+                            echo "</div>";
                         }
                     } else {
                         echo "<p>No flights found</p>";

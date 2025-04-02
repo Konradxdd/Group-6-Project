@@ -1,7 +1,13 @@
 <?php
 session_start();
+include 'database.php';
 
 if (isset($_SESSION['username'])) {
+    if (isset($_GET['redirect']) && $_GET['redirect'] == 'booking.php' && isset($_GET['flight_id'])) {
+        header("Location: booking.php?flight_id=" . $_GET['flight_id']);
+        exit();
+    }
+
     if ($_SESSION['role'] == 'staff') {
         header("Location: staff_page.php");
     } else {
@@ -54,6 +60,9 @@ if (isset($_SESSION['username'])) {
             <div id="loginForm" class="container">
                 <h2>Login</h2><br>
                 <form action="process_login.php" method="POST">
+                    <input type="hidden" name="redirect" value="<?php echo isset($_GET['redirect']) ? $_GET['redirect'] : ''; ?>">
+                    <input type="hidden" name="flight_id" value="<?php echo isset($_GET['flight_id']) ? $_GET['flight_id'] : ''; ?>">
+                    
                     <label for="username">Username:</label><br>
                     <input type="text" id="username" name="username" required><br><br>
 
@@ -62,6 +71,7 @@ if (isset($_SESSION['username'])) {
 
                     <button type="submit">Login</button><br><br>
                 </form>
+
                 <p>Don't have an account? <a href="javascript:void(0);" onclick="toggleForm('register')">Sign Up</a></p>
             </div>
         </section>

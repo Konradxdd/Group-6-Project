@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'database.php';
+include 'database.php'; 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
@@ -16,12 +16,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         if ($password === $user['password']) {
             $_SESSION['username'] = $user['username'];
+            $_SESSION['user_id'] = $user['id'];
             $_SESSION['role'] = $user['role'];
+
+            $redirect = isset($_POST['redirect']) ? $_POST['redirect'] : '';
+            $flight_id = isset($_POST['flight_id']) ? $_POST['flight_id'] : '';
+
+            if ($redirect == 'booking.php' && !empty($flight_id)) {
+                header("Location: booking.php?flight_id=" . $flight_id);
+                exit();
+            }
 
             if ($user['role'] == 'staff') {
                 header("Location: staff_page.php");
             } else {
-                header("Location: customer_page.php");
+                header("Location: index.html");
             }
             exit();
         } else {

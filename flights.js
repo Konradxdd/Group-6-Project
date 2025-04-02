@@ -29,9 +29,9 @@ function fetchFlights() {
             `;
 
             flightCard.onclick = () => {
-                window.location.href = `booking.php?flight_id=${flight.id}`;
+                window.location.href = `authorize.php?redirect=booking.php&flight_id=${flight.id}`;
             };
-
+            
             resultsContainer.appendChild(flightCard);
             });
         })
