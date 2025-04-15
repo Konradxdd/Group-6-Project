@@ -24,13 +24,17 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(response => response.text())
         .then(response => {
+            console.log("Server says:", response);
             if (response === "success") {
                 alert("Seat booked successfully.");
-                location.reload();
-            } else {
+                window.location.href = "index.html";
+            } else if (response === "taken") {
                 alert("Seat already booked. Try another.");
+            } else {
+                alert("Booking failed. Please try again.");
             }
         });
+        
     });
 });
 

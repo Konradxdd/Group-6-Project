@@ -1,15 +1,34 @@
 <?php
+session_start();
 include 'database.php';
 
-if (isset($_POST['seat'])) {
-    $seat = $_POST['seat'];
+if (!isset($_POST['seat'], $_SESSION['user_id'], $_SESSION['flight_id'])) {
+    echo "error";
+    exit();
+}
 
-    $check = mysqli_query($conn, "SELECT * FROM bookings WHERE seat_number='$seat'");
-    if (mysqli_num_rows($check) > 0) {
-        echo "failed";
-    } else {
-        mysqli_query($conn, "INSERT INTO bookings (seat_number) VALUES ('$seat')");
-        echo "success";
-    }
+$seat = $_POST['seat'];
+$user_id = $_SESSION['user_id'];
+$flight_id = $_SESSION['flight_id'];
+$booking_date = date("Y-m-d H:i:s");
+$booking_status = "Confirmed";
+
+$stmt = $conn->prepare("SELECT booking_id FROM bookings WHERE flight_id = ? AND seat_number = ?");
+$stmt->bind_param("is", $flight_id, $seat);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    echo "taken";
+    exit();
+}
+
+$stmt = $conn->prepare("INSERT INTO bookings (user_id, flight_id, seat_number, booking_date, booking_status) VALUES (?, ?, ?, ?, ?)");
+$stmt->bind_param("iisss", $user_id, $flight_id, $seat, $booking_date, $booking_status);
+
+if ($stmt->execute()) {
+    echo "success";
+} else {
+    echo "error";
 }
 ?>

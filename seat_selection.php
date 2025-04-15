@@ -1,3 +1,16 @@
+<?php
+session_start();
+include 'database.php';
+
+if (!isset($_SESSION['username']) || !isset($_SESSION['flight_id'])) {
+    header("Location: authorize.php");
+    exit();
+}
+
+$flight_id = $_SESSION['flight_id'];
+$user_id = $_SESSION['user_id'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

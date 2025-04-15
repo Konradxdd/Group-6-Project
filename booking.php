@@ -29,21 +29,12 @@ if ($result->num_rows !== 1) {
 $flight = $result->fetch_assoc();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $seat_number = rand(1, 150);
-    $booking_date = date("Y-m-d H:i:s");
-    $booking_status = "Confirmed";
-
-    $sql = "INSERT INTO bookings (user_id, flight_id, seat_number, booking_date, booking_status) VALUES (?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("iisss", $user_id, $flight_id, $seat_number, $booking_date, $booking_status);
-
-    if ($stmt->execute()) {
-        echo "<script>alert('Booking successful! Seat Number: $seat_number'); window.location.href='index.html';</script>";
-        exit();
-    } else {
-        echo "Booking failed. Please try again.";
-    }
+    
+    $_SESSION['flight_id'] = $flight_id;
+    header("Location: seat_selection.php");
+    exit();
 }
+
 ?>
 
 <!DOCTYPE html>
