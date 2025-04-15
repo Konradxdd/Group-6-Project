@@ -2,13 +2,16 @@
 session_start();
 include 'database.php';
 
-if (!isset($_SESSION['username']) || !isset($_SESSION['flight_id'])) {
-    header("Location: authorize.php");
+if (!isset($_SESSION['flight_id'])) {
+    echo "Flight information is missing.";
     exit();
 }
 
-$flight_id = $_SESSION['flight_id'];
-$user_id = $_SESSION['user_id'];
+$flight_id = $_SESSION['flight_id']; 
+
+$rows = ['A', 'B', 'C', 'D', 'E', 'F'];
+$columns = 6; 
+
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +33,7 @@ $user_id = $_SESSION['user_id'];
                 <li><a href="flights.php">Flights</a></li>
                 <li><a href="#">About Us</a></li>
                 <li><a href="contact.html" class="active">Contact</a></li>
-               <li><a href="authorize.php" class="active">Login / Register</a></li>
+                <li><a href="authorize.php" class="active">Login / Register</a></li>
                 <li><a href="logout.php">Logout</a></li>
             </ul>
         </nav>
@@ -40,26 +43,22 @@ $user_id = $_SESSION['user_id'];
     <section class="seat-section">
         <div class="container">
             <h2>Select Your Seat</h2>
-            
+
             <div class ="plane">
                 <div class="seats">
                     <?php
-                    include 'database.php';
-
-                    $rows = ['A', 'B', 'C', 'D', 'E', 'F'];
-                    $columns = 6; 
-
+                    
                     for ($i = 1; $i <= 10; $i++) {
                         echo "<div class='row'>";
                         foreach ($rows as $seat) {
-
                             if ($seat === 'D') {
                                 echo "<div class='gap'></div>";
                             }
-                            $seat_id = $seat . $i;
-                            
-                            $check = mysqli_query($conn, "SELECT * FROM bookings WHERE seat_number='$seat_id'");
-                            $occupied = mysqli_num_rows($check) > 0 ? "occupied" : "";  
+
+                            $seat_id = $seat . $i; 
+
+                            $check = mysqli_query($conn, "SELECT * FROM bookings WHERE seat_number='$seat_id' AND flight_id='$flight_id'");
+                            $occupied = mysqli_num_rows($check) > 0 ? "occupied" : "";
 
                             echo "<div class='seat $occupied' id='$seat_id' data-seat='$seat_id'>$seat_id</div>";
                         }
@@ -70,7 +69,7 @@ $user_id = $_SESSION['user_id'];
             </div>
 
             <button id="confirm-btn">Confirm Selection</button>
-    
+
             <script src="seat.js"></script>
 
         </div>

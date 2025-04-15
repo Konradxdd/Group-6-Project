@@ -2,16 +2,16 @@
 session_start();
 include 'database.php';
 
-if (!isset($_POST['seat'], $_SESSION['user_id'], $_SESSION['flight_id'])) {
+if (!isset($_SESSION['user_id'], $_SESSION['flight_id'], $_POST['seat'])) {
     echo "error";
     exit();
 }
 
-$seat = $_POST['seat'];
 $user_id = $_SESSION['user_id'];
 $flight_id = $_SESSION['flight_id'];
+$seat = $_POST['seat'];
 $booking_date = date("Y-m-d H:i:s");
-$booking_status = "Confirmed";
+$booking_status = "Confirmed"; 
 
 $stmt = $conn->prepare("SELECT booking_id FROM bookings WHERE flight_id = ? AND seat_number = ?");
 $stmt->bind_param("is", $flight_id, $seat);

@@ -24,7 +24,6 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(response => response.text())
         .then(response => {
-            console.log("Server says:", response);
             if (response === "success") {
                 alert("Seat booked successfully.");
                 window.location.href = "index.html";
@@ -34,6 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 alert("Booking failed. Please try again.");
             }
         });
+        
         
     });
 });
