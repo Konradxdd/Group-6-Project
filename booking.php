@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("iisss", $user_id, $flight_id, $seat_number, $booking_date, $booking_status);
 
     if ($stmt->execute()) {
-        echo "<script>alert('Booking successful! Seat Number: $seat_number'); window.location.href='customer_page.php';</script>";
+        echo "<script>alert('Booking successful! Seat Number: $seat_number'); window.location.href='index.html';</script>";
         exit();
     } else {
         echo "Booking failed. Please try again.";
@@ -73,23 +73,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!-- Booking Form -->
     <section class="booking-section">
-        <h2>Confirm Your Booking</h2>
         <div class="flight-details">
+            <h2>Confirm Your Booking</h2>
             <p><strong>Airline:</strong> <?php echo $flight['airline']; ?></p>
             <p><strong>Route:</strong> <?php echo $flight['departure']; ?> ➝ <?php echo $flight['destination']; ?></p>
+            <p><strong>Date:</strong> <?php echo $flight['flight_date']; ?></p>
             <p><strong>Departure:</strong> <?php echo $flight['departure_time']; ?></p>
             <p><strong>Arrival:</strong> <?php echo $flight['arrival_time']; ?></p>
             <p><strong>Price:</strong> €<?php echo $flight['price']; ?></p>
-        </div>
 
-        <form method="POST">
-            <button type="submit" class="btn">Confirm Booking</button>
-        </form>
+            <form method="POST">
+                <button type="submit" class="btn">Confirm Booking</button>
+            </form>
+
+        </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <div class="footer-content">
+        <div class="footer-booking">
             <p>&copy; 2025 Airline Booking. All rights reserved.</p>
             <ul class="social-links">
                 <li><a href="#">Facebook</a></li>

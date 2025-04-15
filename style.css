@@ -907,3 +907,76 @@ footer {
     display: none;
 }
 
+
+
+
+/*      Booking Page   */
+
+
+.booking-section {
+    background: #F4F4F4; 
+    padding: 50px 20px;
+    text-align: center;
+}
+
+
+.flight-details {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto; 
+}
+
+
+.booking-section h2 {
+    color: #004080; 
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+
+.booking-section p {
+    font-weight: bold;
+    display: block;
+    text-align: left;
+    margin-top: 10px;
+    color: #004080;
+}
+
+.booking-section button {
+    width: 100%;
+    padding: 12px;
+    background: #FFD700;
+    border: none;
+    color: #004080;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: 0.3s ease-in-out;
+}
+
+
+.booking-section button:hover {
+    background: #FFC000;
+    transform: scale(1.05);
+}
+
+footer {
+    background: #002244;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 100px;
+}
+
+.footer-booking {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
