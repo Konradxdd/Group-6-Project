@@ -72,107 +72,76 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <title>User Management</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 30px;
-            background-color: #f4f4f4;
-        }
-
-        h1, h2 {
-            color: #333;
-        }
-
-        form {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 400px;
-            margin-bottom: 30px;
-        }
-
-        label {
-            display: block;
-            margin-top: 10px;
-        }
-
-        input, select {
-            padding: 8px;
-            width: 100%;
-            margin-top: 5px;
-        }
-
-        input[type="submit"] {
-            margin-top: 15px;
-            background-color: #007BFF;
-            border: none;
-            color: white;
-            cursor: pointer;
-            width: auto;
-        }
-
-        ul {
-            list-style: none;
-            padding: 0;
-            background: white;
-            max-width: 400px;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 30px;
-        }
-
-        li {
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
-
-        .delete-btn {
-            color: red;
-            text-decoration: none;
-            margin-left: 10px;
-        }
-
-        .delete-btn:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <h1>User Management</h1>
+    <!-- Navigation Bar -->
+    <header>
+        <nav>
+            <div class="logo">Polish Air</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="flights.php">Flights</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+                <li><a href="authorize.php" class="active">Login / Register</a></li>
+                <li><a href="logout.php">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <h2>Add New User</h2>
-    <form method="POST" action="">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
+    <div class="user-container">
+        <h1>User Management</h1>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
+        <div class="user-card">
+            <h2>Add New User</h2>
+            <form method="POST" action="">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
 
-        <label for="role">Role:</label>
-        <select id="role" name="role" required>
-            <option value="">-- Choose Role --</option>
-            <option value="Staff">Staff</option>
-            <option value="Customer">Customer</option>
-        </select>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
 
-        <input type="submit" value="Add User">
-    </form>
+                <label for="role">Role:</label>
+                <select id="role" name="role" required>
+                    <option value="">-- Choose Role --</option>
+                    <option value="Staff">Staff</option>
+                    <option value="Customer">Customer</option>
+                </select>
 
-    <h2>Existing Users</h2>
-    <ul>
-        <?php
-       
-        if ($result->num_rows > 0) {
-            while ($user = $result->fetch_assoc()) {
-                echo "<li>" . htmlspecialchars($user['username']) . " ({$user['role']}) 
-                <a href='?delete={$user['id']}' class='delete-btn' onclick='return confirm(\"Are you sure?\")'>Remove</a></li>";
-            }
-        } else {
-            echo "<li>No users found.</li>";
-        }
-        ?>
-    </ul>
+                <input type="submit" value="Add User" class="user-btn">
+            </form>
+        </div>
+
+        <div class="user-card">
+            <h2>Existing Users</h2>
+            <ul class="user-list">
+                <?php
+                if ($result->num_rows > 0) {
+                    while ($user = $result->fetch_assoc()) {
+                        echo "<li class='user-item'>" . htmlspecialchars($user['username']) . " ({$user['role']}) 
+                        <a href='?delete={$user['id']}' class='btn user-btn' onclick='return confirm(\"Are you sure?\")'>Remove</a></li>";
+                    }
+                } else {
+                    echo "<li class='user-item'>No users found.</li>";
+                }
+                ?>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Airline Booking. All rights reserved.</p>
+            <ul class="social-links">
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">Twitter</a></li>
+                <li><a href="#">Instagram</a></li>
+            </ul>
+        </div>
+    </footer>
 
 </body>
 </html>
