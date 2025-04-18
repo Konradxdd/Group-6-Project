@@ -832,29 +832,6 @@ footer {
 
 /* authorize.php */
 
-.auth-container {
-    max-width: 900px;
-    margin: 50px auto;
-    padding: 30px;
-    background-color: #fff;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-}
-
-.auth-container header {
-    text-align: center;
-}
-
-.auth-container header h2 {
-    font-size: 24px;
-    color: #333;
-}
-
-.auth-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
 
 .auth-form input[type="text"],
 .auth-form input[type="email"],
