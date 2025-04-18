@@ -9,9 +9,9 @@ if (isset($_SESSION['username'])) {
     }
 
     if ($_SESSION['role'] == 'staff') {
-        header("Location: staff_page.php");
+        header("Location: staff.html");
     } else {
-        header("Location: customer_page.php");
+        header("Location: index.html");
     }
     exit();
 }
