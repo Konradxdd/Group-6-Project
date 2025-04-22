@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
 
             if ($user['role'] == 'staff') {
-                header("Location: staff.html");
+                header("Location: staffdashboard/staff.html");
             } else {
                 header("Location: index.html");
             }

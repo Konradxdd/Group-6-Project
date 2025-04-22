@@ -27,14 +27,4 @@ document.addEventListener("DOMContentLoaded", function() {
         alert("Access Denied: You do not have permission to view this page.");
         window.location.href = "staffprofile.html"; // Redirect to Profile instead of blocking access
     }
-
-    // Logout Functionality
-    let logoutButton = document.querySelector(".logout");
-    if (logoutButton) {
-        logoutButton.addEventListener("click", function(event) {
-            event.preventDefault();
-            localStorage.removeItem("userRole"); // Clear session
-            window.location.href = "login.html"; // Redirect to login page
-        });
-    }
 });

@@ -3,7 +3,7 @@ session_start();
 session_unset(); 
 session_destroy(); 
 
-header("Location: authorize.php"); 
+header("Location: authorize.php");
 exit();
 ?>
 
