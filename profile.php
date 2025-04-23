@@ -12,10 +12,10 @@ $user_id = $_SESSION['user_id'];
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['request_refund'])) {
     $booking_id = $_POST['booking_id']; 
 
-    $check_query = "SELECT b.*, f.flight_date 
-                FROM bookings b
-                JOIN flights f ON b.flight_id = f.id
-                WHERE b.booking_id = ?";
+    $check_query = "SELECT b.*, f.flight_date, f.price 
+                    FROM bookings b
+                    JOIN flights f ON b.flight_id = f.id
+                    WHERE b.booking_id = ?";
     $check_stmt = $conn->prepare($check_query);
     $check_stmt->bind_param("i", $booking_id);
     $check_stmt->execute();
@@ -24,11 +24,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['request_refund'])) {
     if ($check_result->num_rows > 0) {
         $booking = $check_result->fetch_assoc();
 
+        $flight_price = $booking['price'];
+
         if (strtotime($booking['flight_date']) > time()) {
-            $update_query = "UPDATE bookings SET refund_requested = 1 WHERE booking_id = ?";
+            $update_query = "UPDATE bookings SET refund_requested = 1, refund_amount = ?, refund_status = 'Pending' WHERE booking_id = ?";
             $update_stmt = $conn->prepare($update_query);
-            $update_stmt->bind_param("i", $booking_id);
+            $update_stmt->bind_param("di", $flight_price, $booking_id);
             $update_stmt->execute();
+
             echo "Refund request submitted. It is under review.";
         } else {
             echo "Refund cannot be requested as the flight has already departed.";
