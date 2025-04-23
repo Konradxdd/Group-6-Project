@@ -28,12 +28,100 @@ function fetchFlights() {
                 <a href="booking.php?flight_id=${flight.id}" class="book-btn">Book Now</a>
             `;
 
-            flightCard.onclick = () => {
-                window.location.href = `authorize.php?redirect=booking.php&flight_id=${flight.id}`;
-            };
-            
-            resultsContainer.appendChild(flightCard);
+                flightCard.onclick = () => {
+                    window.location.href = `authorize.php?redirect=booking.php&flight_id=${flight.id}`;
+                };
+
+                resultsContainer.appendChild(flightCard);
             });
         })
         .catch(error => console.error('Error fetching flights:', error));
 }
+
+function updateDestinationCities() {
+    const departure = document.getElementById('departure').value;
+
+    const destinationSelect = document.getElementById('destination');
+    destinationSelect.innerHTML = "<option value=''>Select Destination City</option>";
+
+    if (!departure) {
+        return; 
+    }
+
+    fetch(`get_destinations.php?departure=${departure}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.length > 0) {
+                data.forEach(destination => {
+                    const option = document.createElement("option");
+                    option.value = destination;
+                    option.textContent = destination;
+                    destinationSelect.appendChild(option);
+                });
+            } else {
+                const option = document.createElement("option");
+                option.value = '';
+                option.textContent = "No destinations found";
+                destinationSelect.appendChild(option);
+            }
+        })
+        .catch(error => console.error('Error fetching destinations:', error));
+}
+
+
+function updateAvailableDates() {
+    fetch('get_available_dates.php')
+        .then(response => response.json())
+        .then(data => {
+            const flightDateInput = document.getElementById('flight_date');
+            
+            flightDateInput.removeAttribute("min");
+            flightDateInput.removeAttribute("max");
+
+            const availableDates = data;
+
+            availableDates.forEach(date => {
+                const formattedDate = date;
+
+                let dateOption = document.createElement("option");
+                dateOption.value = formattedDate;
+                dateOption.setAttribute("disabled", "disabled");
+            });
+
+        })
+        .catch(error => console.error('Error fetching available dates:', error));
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    updateAvailableDates();
+});
+
+function fetchAndDisableDates() {
+    const departure = document.getElementById('departure').value;
+    const destination = document.getElementById('destination').value;
+
+    if (!departure || !destination) {
+        return;
+    }
+
+    fetch(`get_available_dates.php?departure=${departure}&destination=${destination}`)
+        .then(response => response.json())
+        .then(availableDates => {
+            flatpickr("#flight_date", {
+                disable: [
+                    function(date) {
+                        const dateStr = date.toISOString().split('T')[0];
+                        return !availableDates.includes(dateStr);
+                    }
+                ],
+                dateFormat: "Y-m-d", 
+                mode: "single",
+            });
+        })
+        .catch(error => console.error('Error fetching available dates:', error));
+}
+
+document.addEventListener('DOMContentLoaded', fetchAndDisableDates);
+
+document.getElementById('departure').addEventListener('change', fetchAndDisableDates);
+document.getElementById('destination').addEventListener('change', fetchAndDisableDates);

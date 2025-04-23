@@ -10,6 +10,8 @@ include 'database.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flights</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="flights.js" defer></script>
 </head>
 <body>
@@ -34,17 +36,43 @@ include 'database.php';
     <section id="flights" class="search-section">
         <h2>Find Your Flight</h2>
         <form onsubmit="fetchFlights(); return false;">
-            <input type="text" id="departure" name="departure" placeholder="Departure City" required>
-            <input type="text" id="destination" name="destination" placeholder="Destination City" required>
+            <!-- Departure City Dropdown -->
+            <select id="departure" name="departure" required onchange="updateDestinationCities();">
+                <option value="">Select Departure City</option>
+                <?php
+                $sql = "SELECT DISTINCT departure FROM flights ORDER BY departure";
+                $result = $conn->query($sql);
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<option value='" . $row['departure'] . "'>" . $row['departure'] . "</option>";
+                    }
+                } else {
+                    echo "<option value=''>No departure cities found</option>";
+                }
+                ?>
+            </select>
+
+            <!-- Destination City Dropdown (Empty initially) -->
+            <select id="destination" name="destination" required>
+                <option value="">Select Destination City</option>
+            </select>
+
+            <!-- Flight Date Picker -->
             <input type="date" id="flight_date" name="flight_date" required>
+
+            <!-- Flight Class Dropdown -->
             <select id="flight_class" name="class" required>
                 <option value="economy">Economy</option>
                 <option value="business">Business</option>
                 <option value="first">First Class</option>
             </select>
+
+            <!-- Search Button -->
             <button type="submit" class="btn">Search</button>
         </form>
     </section>
+
+
 
     <!-- Flight List -->
     <section class="flight-list">
