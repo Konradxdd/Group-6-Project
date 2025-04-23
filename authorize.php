@@ -48,7 +48,7 @@ if (isset($_SESSION['username'])) {
                 <li><a href="about.html">About Us</a></li>
                 <li><a href="contact.html">Contact</a></li>
                 <li><a href="authorize.php" class="active">Login / Register</a></li>
-                <li><a href="logout.php">Logout</a></li>
+                <li><a href="logout.php" class="logout">Logout</a></li>
             </ul>
         </nav>
     </header>

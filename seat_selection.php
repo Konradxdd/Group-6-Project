@@ -34,7 +34,7 @@ $columns = 6;
                 <li><a href="#">About Us</a></li>
                 <li><a href="contact.html" class="active">Contact</a></li>
                 <li><a href="authorize.php" class="active">Login / Register</a></li>
-                <li><a href="logout.php">Logout</a></li>
+                <li><a href="logout.php" class="logout">Logout</a></li>
             </ul>
         </nav>
     </header>

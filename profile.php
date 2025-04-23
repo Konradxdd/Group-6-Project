@@ -8,7 +8,11 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
-$query = "SELECT * FROM bookings WHERE user_id = ?";
+
+$query = "SELECT b.flight_id, b.seat_number, b.booking_date, b.booking_status, f.departure, f.destination
+          FROM bookings b
+          JOIN flights f ON b.flight_id = f.id
+          WHERE b.user_id = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
@@ -21,7 +25,7 @@ $result = $stmt->get_result();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Bookings</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <style>
     h2 {
@@ -31,7 +35,7 @@ $result = $stmt->get_result();
     }
 
     a {
-    color: #007bff;
+    color: #004080;
     text-decoration: none;
     }
 
@@ -54,7 +58,7 @@ $result = $stmt->get_result();
     }
 
     th {
-        background-color: #007bff;
+        background-color: #004080;
         color: white;
     }
 
@@ -68,6 +72,22 @@ $result = $stmt->get_result();
 
 </style>
 <body>
+
+    <!-- Navigation Bar -->
+    <header>
+        <nav>
+            <div class="logo">Polish Air</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="flights.php">Flights</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+                <li><a href="authorize.php" class="active">Login / Register</a></li>
+                <li><a href="logout.php" class="logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
     <h2>My Flight Bookings</h2>
 
     <?php if ($result->num_rows == 0): ?>
@@ -85,8 +105,8 @@ $result = $stmt->get_result();
             <?php while ($row = $result->fetch_assoc()): ?>
             <tr>
                 <td><?php echo htmlspecialchars($row['flight_id']); ?></td>
-                <td><?php echo substr($row['flight_id'], 0, 2); ?></td>
-                <td><?php echo substr($row['flight_id'], 2, 2); ?></td>
+                <td><?php echo htmlspecialchars($row['departure']); ?></td>
+                <td><?php echo htmlspecialchars($row['destination']); ?></td>
                 <td><?php echo htmlspecialchars($row['seat_number']); ?></td>
                 <td><?php echo htmlspecialchars($row['booking_date']); ?></td>
                 <td><?php echo htmlspecialchars($row['booking_status']); ?></td>
@@ -94,8 +114,6 @@ $result = $stmt->get_result();
             <?php endwhile; ?>
         </table>
     <?php endif; ?>
-
-    <a href="logout.php">Logout</a>
 </body>
 </html>
  
