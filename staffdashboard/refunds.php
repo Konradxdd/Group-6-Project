@@ -34,8 +34,8 @@ $result = $conn->query($query);
             <li><a href="staff.html">Dashboard</a></li>
             <li><a href="manageflights.html">Manage Flights</a></li>
             <li><a href="staffm.html">Staff Management</a></li>
+            <li><a href="refunds.php">Manage Refunds</a></li>
             <li><a href="staffprofile.html">Profile</a></li>
-            <li><a href="refunds.php" class="active">Manage Refunds</a></li>
             <li><a href="../logout.php" class="logout">Logout</a></li>
         </ul>
     </div>
