@@ -9,8 +9,38 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-$query = "SELECT b.flight_id, b.seat_number, b.booking_date, b.booking_status,
-                 f.departure, f.destination, f.departure_time, f.arrival_time, f.flight_date
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['request_refund'])) {
+    $booking_id = $_POST['booking_id']; 
+
+    $check_query = "SELECT b.*, f.flight_date 
+                FROM bookings b
+                JOIN flights f ON b.flight_id = f.id
+                WHERE b.booking_id = ?";
+    $check_stmt = $conn->prepare($check_query);
+    $check_stmt->bind_param("i", $booking_id);
+    $check_stmt->execute();
+    $check_result = $check_stmt->get_result();
+
+    if ($check_result->num_rows > 0) {
+        $booking = $check_result->fetch_assoc();
+
+        if (strtotime($booking['flight_date']) > time()) {
+            $update_query = "UPDATE bookings SET refund_requested = 1 WHERE booking_id = ?";
+            $update_stmt = $conn->prepare($update_query);
+            $update_stmt->bind_param("i", $booking_id);
+            $update_stmt->execute();
+            echo "Refund request submitted. It is under review.";
+        } else {
+            echo "Refund cannot be requested as the flight has already departed.";
+        }
+    } else {
+        echo "Booking not found.";
+    }
+}
+
+$query = "SELECT b.booking_id, b.flight_id, b.seat_number, b.booking_date, b.booking_status,
+                 f.departure, f.destination, f.departure_time, f.arrival_time, f.flight_date,
+                 b.refund_requested, b.refund_status
           FROM bookings b
           JOIN flights f ON b.flight_id = f.id
           WHERE b.user_id = ?";
@@ -106,6 +136,7 @@ $result = $stmt->get_result();
                 <th>Seat Number</th>
                 <th>Booking Date</th>
                 <th>Status</th>
+                <th>Refund</th>
             </tr>
             <?php while ($row = $result->fetch_assoc()): ?>
             <tr>
@@ -118,6 +149,22 @@ $result = $stmt->get_result();
                 <td><?php echo htmlspecialchars($row['seat_number']); ?></td>
                 <td><?php echo htmlspecialchars($row['booking_date']); ?></td>
                 <td><?php echo htmlspecialchars($row['booking_status']); ?></td>
+
+                <td>
+                    <?php if ($row['refund_requested'] == 0 && strtotime($row['flight_date']) > time()): ?>
+                        <form method="POST">
+                            <input type="hidden" name="booking_id" value="<?php echo $row['booking_id']; ?>"> 
+                            <button type="submit" name="request_refund" class="btn">Request Refund</button>
+                        </form>
+                    <?php elseif ($row['refund_requested'] == 1 && $row['refund_status'] == 'Pending'): ?>
+                        <span>Refund Requested</span>
+                    <?php elseif ($row['refund_status'] == 'Approved'): ?>
+                        <span>Refund Approved</span>
+                    <?php else: ?>
+                        <span>No Refund Available</span>
+                    <?php endif; ?>
+                </td>
+                        
             </tr>
             <?php endwhile; ?>
         </table>
