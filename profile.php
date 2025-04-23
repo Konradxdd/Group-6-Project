@@ -9,7 +9,8 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-$query = "SELECT b.flight_id, b.seat_number, b.booking_date, b.booking_status, f.departure, f.destination
+$query = "SELECT b.flight_id, b.seat_number, b.booking_date, b.booking_status,
+                 f.departure, f.destination, f.departure_time, f.arrival_time, f.flight_date
           FROM bookings b
           JOIN flights f ON b.flight_id = f.id
           WHERE b.user_id = ?";
@@ -83,6 +84,7 @@ $result = $stmt->get_result();
                 <li><a href="about.html">About Us</a></li>
                 <li><a href="contact.html" class="active">Contact</a></li>
                 <li><a href="authorize.php" class="active">Login / Register</a></li>
+                <li><a href="profile.php">My Bookings</a></li>
                 <li><a href="logout.php" class="logout">Logout</a></li>
             </ul>
         </nav>
@@ -98,6 +100,9 @@ $result = $stmt->get_result();
                 <th>Flight ID</th>
                 <th>Departure</th>
                 <th>Destination</th>
+                <th>Flight Date</th>
+                <th>Departure Time</th>
+                <th>Arrival Time</th>
                 <th>Seat Number</th>
                 <th>Booking Date</th>
                 <th>Status</th>
@@ -107,6 +112,9 @@ $result = $stmt->get_result();
                 <td><?php echo htmlspecialchars($row['flight_id']); ?></td>
                 <td><?php echo htmlspecialchars($row['departure']); ?></td>
                 <td><?php echo htmlspecialchars($row['destination']); ?></td>
+                <td><?php echo htmlspecialchars($row['flight_date']); ?></td>
+                <td><?php echo htmlspecialchars($row['departure_time']); ?></td>
+                <td><?php echo htmlspecialchars($row['arrival_time']); ?></td>
                 <td><?php echo htmlspecialchars($row['seat_number']); ?></td>
                 <td><?php echo htmlspecialchars($row['booking_date']); ?></td>
                 <td><?php echo htmlspecialchars($row['booking_status']); ?></td>

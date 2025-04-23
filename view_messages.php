@@ -23,6 +23,7 @@ include 'database.php';
                 <li><a href="about.html">About Us</a></li>
                 <li><a href="contact.html">Contact</a></li>
                 <li><a href="authorize.php">Login / Register</a></li>
+                <li><a href="profile.php">My Bookings</a></li>
                 <li><a href="logout.php">Logout</a></li>
             </ul>
         </nav>
