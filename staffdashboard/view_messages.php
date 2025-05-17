@@ -22,6 +22,7 @@ include '../database.php';
             <li><a href="staffm.html">Staff Management</a></li>
             <li><a href="refunds.php">Manage Refunds</a></li>
             <li><a href="view_messages.php">Manage Messages</a></li>
+            <li><a href="user_management.php">Manage Users</a></li>
             <li><a href="staffprofile.html">Profile</a></li>
             <li><a href="../logout.php" class="logout">Logout</a></li>
         </ul>
