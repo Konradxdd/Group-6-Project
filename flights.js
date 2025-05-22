@@ -96,32 +96,36 @@ document.addEventListener('DOMContentLoaded', function() {
     updateAvailableDates();
 });
 
+let fpInstance = null;
+
 function fetchAndDisableDates() {
     const departure = document.getElementById('departure').value;
     const destination = document.getElementById('destination').value;
 
-    if (!departure || !destination) {
-        return;
-    }
+    if (!departure || !destination) return;
 
-    fetch(`get_available_dates.php?departure=${departure}&destination=${destination}`)
+    fetch(`get_available_dates.php?departure=${encodeURIComponent(departure)}&destination=${encodeURIComponent(destination)}`)
         .then(response => response.json())
         .then(availableDates => {
-            flatpickr("#flight_date", {
-                disable: [
-                    function(date) {
-                        const dateStr = date.toISOString().split('T')[0];
-                        return !availableDates.includes(dateStr);
-                    }
-                ],
-                dateFormat: "Y-m-d", 
+
+            if (window.flightDatePicker) {
+                window.flightDatePicker.destroy();
+            }
+
+            window.flightDatePicker = flatpickr("#flight_date", {
+                dateFormat: "Y-m-d",
                 mode: "single",
+                enable: availableDates,
+                onChange: function(selectedDates, dateStr) {
+                
+                    fetchFlights();
+                }
             });
         })
-        .catch(error => console.error('Error fetching available dates:', error));
+        .catch(err => console.error('Error fetching available dates:', err));
 }
 
-document.addEventListener('DOMContentLoaded', fetchAndDisableDates);
 
+document.addEventListener('DOMContentLoaded', fetchAndDisableDates);
 document.getElementById('departure').addEventListener('change', fetchAndDisableDates);
 document.getElementById('destination').addEventListener('change', fetchAndDisableDates);
